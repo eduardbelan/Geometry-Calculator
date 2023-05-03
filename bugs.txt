@@ -1,0 +1,19 @@
+Program Requirements
+=====================
+- The Program should ask the user to pick a shape
+    1. Square
+    2. Rectangle
+    3. Triangle
+    4. Trapezoid
+    5. Circle
+
+- It should then ask the according questions to calculate the missing values for the chosen shape.
+    - Which values are already given?
+- The User has to input the known values here.
+
+- The Program now takes the given inputs and calculates the missing values.
+    - Show the results
+
+- At last the Program should ask the User if they want to do another calculation.
+    - If yes, ask again for a shape.
+    - If no, exit the Program.
