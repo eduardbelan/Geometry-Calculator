@@ -1,47 +1,35 @@
-import math
-from q_formula import umfang, flaecheninhalt, gegeben_umfang, gegeben_flaecheninhalt
+class GeoCalc:
+    """A Model of a Calculator to find missing values in the following shapes:
+    Square, Rectangle, Triangle, Trapezoid, Circle"""
 
+    def __init__(self):
+        """init some attributes if needed"""
+        pass
 
-def berechnung_frage():
-    end = False
-    while not end:
+    def user_choice(self):
+        """Ask User to choose shape"""
+        pick = int(input("1. Square\n"
+                     "2. Rectangle\n"
+                     "3. Triangle\n"
+                     "4. Trapezoid\n"
+                     "5. Circle\n"
+                     "Type a Number to pick a Shape: "))
+        self.pick = pick
+        self.user_evaluation()
 
-        again = input("Neue Berechnung? [J/N]: ")
-        if again.lower() == "j":
-            berechnung_rechnung()
-        elif again.lower() == "n":
-            print("Tschüssi")
-            end = True
-        else:
-            print("Ungültige Eingabe")
+    def user_evaluation(self):
+        """Evaluates the choice of the User"""
+        print("")
+        if self.pick == 1:
+            print("Square is calculated...")
+        elif self.pick == 2:
+            print("Rectangle is calculated...")
+        elif self.pick == 3:
+            print("Triangle is calculated...")
+        elif self.pick == 4:
+            print("Trapezoid is calculated...")
+        elif self.pick == 5:
+            print("Circle is calculated...")
 
-
-def berechnung_rechnung():
-    enough = False
-    while not enough:
-
-        eingabe = input("Eingabe, Rechteck/Quadrat, [R/Q]: ")
-        if eingabe.lower() == "q":
-            nummer = input("Seite, Flächeninhalt, Umfang, [S/F/U]: ")
-            if nummer.lower() == "s":
-                usr_choice = float(input("Seitenlänge: "))
-                print(f"Umfang: {umfang(usr_choice)}")
-                print(f"Flächeninhalt: {flaecheninhalt(usr_choice)}")
-                enough = True
-            elif nummer.lower() == "f":
-                usr_choice = float(input("Flächeninhalt: "))
-                seite = gegeben_flaecheninhalt(num_1=usr_choice)
-                print(f"Seitenlänge: {gegeben_flaecheninhalt(usr_choice)}")
-                print(f"Umfang: {umfang(seite)}")
-                enough = True
-            elif nummer.lower() == "u":
-                usr_choice = float(input("Umfang: "))
-                seite = gegeben_umfang(usr_choice)
-                print(f"Flächeninhalt: {flaecheninhalt(seite)}")
-                print(f"Seitenlänge: {gegeben_umfang(usr_choice)}")
-                enough = True
-        else:
-            print("Ungültige Eingabe")
-
-
-berechnung_frage()
+calc = GeoCalc()
+calc.user_choice()
