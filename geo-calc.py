@@ -1,5 +1,7 @@
 import math
 
+PICKS_RECTANGLE = []
+
 
 class GeoCalc:
     """A Model of a Calculator to find missing values in the following shapes:
@@ -12,9 +14,6 @@ class GeoCalc:
         self.square_seite = None
         self.square_umfang = None
         self.square_flaeche = None
-        self.rectangle_whats_given = None
-        self.rectangle_whats_given_1 = None
-        self.rectangle_whats_given_2 = None
         self.rectangle_seite_a = None
         self.rectangle_seite_b = None
         self.rectangle_umfang = None
@@ -104,26 +103,22 @@ class GeoCalc:
                 whats_given = input("Invalid Input. "
                                     "Enter two digits with no spaces in between in this format 'num1num2': ")
             else:
-                whats_given_1 = int(whats_given[0])
-                whats_given_2 = int(whats_given[1])
-                self.rectangle_whats_given_1 = whats_given_1
-                self.rectangle_whats_given_2 = whats_given_2
-                print(f"1: {whats_given_1}\n"
-                      f"2: {whats_given_2}")
+                PICKS_RECTANGLE.append(int(whats_given[0]))
+                PICKS_RECTANGLE.append(int(whats_given[1]))
+                PICKS_RECTANGLE.sort()
                 break
 
-            ## maybe make a list and append whats_given values? sort them and then prompt user for values?
-
-            if self.rectangle_whats_given == 1:
+        for i in PICKS_RECTANGLE:
+            if i == 1:
                 seite_a = float(input("\nEnter Seitenlänge a: "))
                 self.rectangle_seite_a = seite_a
-            elif self.rectangle_whats_given == 2:
+            elif i == 2:
                 seite_b = float(input("\nEnter Seitenlänge b: "))
                 self.rectangle_seite_b = seite_b
-            elif self.rectangle_whats_given == 3:
+            elif i == 3:
                 umfang = float(input("\nEnter Umfang: "))
                 self.rectangle_umfang = umfang
-            elif self.rectangle_whats_given == 4:
+            elif i == 4:
                 flaeche = float(input("\nEnter Flächeninhalt: "))
                 self.rectangle_flaeche = flaeche
         self.rectangle_calc()
@@ -132,7 +127,7 @@ class GeoCalc:
         """Missing values of Rectangle are calculated"""
 
         # Seitenlängen a und b known
-        if self.rectangle_whats_given == 1 and self.rectangle_whats_given == 2:
+        if 1 in PICKS_RECTANGLE and 2 in PICKS_RECTANGLE:
             self.rectangle_umfang = 2 * (self.rectangle_seite_a + self.rectangle_seite_b)
             self.rectangle_flaeche = self.rectangle_seite_a * self.rectangle_seite_b
             print(f"\nGegeben Seitenlänge a: {self.rectangle_seite_a}\n"
@@ -141,7 +136,7 @@ class GeoCalc:
                   f"Berechnet Fläche: {self.rectangle_flaeche}")
 
         # Seitenlänge a und Umfang known
-        elif self.rectangle_whats_given == 1 and self.rectangle_whats_given == 3:
+        elif 1 in PICKS_RECTANGLE and 3 in PICKS_RECTANGLE:
             self.rectangle_seite_b = (self.rectangle_umfang - 2 * self.rectangle_seite_a) / 2
             self.rectangle_flaeche = self.rectangle_seite_a * self.rectangle_seite_b
             print(f"\nGegeben Seitenlänge a: {self.rectangle_seite_a}\n"
@@ -150,7 +145,7 @@ class GeoCalc:
                   f"Berechnet Fläche: {self.rectangle_flaeche}")
 
         # Seitenlänge b und Umfang known
-        elif self.rectangle_whats_given == 2 and self.rectangle_whats_given == 3:
+        elif 2 in PICKS_RECTANGLE and 3 in PICKS_RECTANGLE:
             self.rectangle_seite_a = (self.rectangle_umfang - 2 * self.rectangle_seite_b) / 2
             self.rectangle_flaeche = self.rectangle_seite_a * self.rectangle_seite_b
             print(f"\nGegeben Seitenlänge b: {self.rectangle_seite_b}\n"
@@ -159,7 +154,7 @@ class GeoCalc:
                   f"Berechnet Fläche: {self.rectangle_flaeche}")
 
         # Seitenlänge a und Fläche known
-        elif self.rectangle_whats_given == 1 and self.rectangle_whats_given == 4:
+        elif 1 in PICKS_RECTANGLE and 4 in PICKS_RECTANGLE:
             self.rectangle_seite_b = self.rectangle_flaeche / self.rectangle_seite_a
             self.rectangle_umfang = 2 * (self.rectangle_seite_a + self.rectangle_seite_b)
             print(f"\nGegeben Seitenlänge a: {self.rectangle_seite_a}\n"
@@ -168,7 +163,7 @@ class GeoCalc:
                   f"Berechnet Umfang: {self.rectangle_umfang}")
 
         # Seitenlänge b und Fläche known
-        elif self.rectangle_whats_given == 2 and self.rectangle_whats_given == 4:
+        elif 2 in PICKS_RECTANGLE and 4 in PICKS_RECTANGLE:
             self.rectangle_seite_a = self.rectangle_flaeche / self.rectangle_seite_b
             self.rectangle_umfang = 2 * (self.rectangle_seite_a + self.rectangle_seite_b)
             print(f"\nGegeben Seitenlänge b: {self.rectangle_seite_b}\n"
@@ -177,7 +172,7 @@ class GeoCalc:
                   f"Berechnet Umfang: {self.rectangle_umfang}")
 
         # Umfang und Fläche known
-        elif self.rectangle_whats_given == 3 and self.rectangle_whats_given == 4:
+        elif 3 in PICKS_RECTANGLE and 4 in PICKS_RECTANGLE:
             self.rectangle_seite_a = ((self.rectangle_umfang / 2)
                                       + math.sqrt((self.rectangle_umfang / 2) ** 2 - 4 * self.rectangle_flaeche)) / 2
             self.rectangle_seite_b = self.rectangle_flaeche / self.rectangle_seite_a
