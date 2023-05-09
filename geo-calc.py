@@ -1,6 +1,27 @@
 import math
 
-PICKS_RECTANGLE = []
+RECTANGLE_PICKS = []
+TRIANGLE_GEGEBEN = {}
+TRIANGLE_BERECHNET = {}
+
+
+def triangle_print():
+    """Make a print order and print gegeben and berechnet values in correct order"""
+
+    print_order = ["Seite A:", "Seite B:", "Seite C:",
+                   "Höhe A:", "Höhe B:", "Höhe C:",
+                   "\u03B1:", "\u03B2:", "\u03B3:",
+                   "Umfang:", "Fläche:"]
+
+    print("\nGegeben:")
+    for k, v in TRIANGLE_GEGEBEN.items():
+        print(k, round(v, 2))
+    print("")
+
+    print("Berechnet:")
+    for k in print_order:
+        print(f"{k} {round(TRIANGLE_BERECHNET[k], 2)}")
+    print("")
 
 
 class GeoCalc:
@@ -9,6 +30,8 @@ class GeoCalc:
 
     def __init__(self):
         """init some attributes if needed"""
+        self.triangle_berechnet = None
+        self.triangle_gegeben = None
         self.triangle_hoehe_c = None
         self.triangle_seite_c = None
         self.triangle_whats_given = None
@@ -68,27 +91,27 @@ class GeoCalc:
 
         # Seitenlänge known
         if self.square_whats_given == 1:
-            self.square_umfang = self.square_seite * 4
-            self.square_flaeche = self.square_seite * self.square_seite
+            square_umfang = self.square_seite * 4
+            square_flaeche = self.square_seite * self.square_seite
             print(f"\nGegeben Seitenlänge: {self.square_seite}\n"
-                  f"Berechnet Umfang: {self.square_umfang}\n"
-                  f"Berechnet Fläche: {self.square_flaeche}")
+                  f"Berechnet Umfang: {square_umfang}\n"
+                  f"Berechnet Fläche: {square_flaeche}")
 
         # Umfang known
         elif self.square_whats_given == 2:
-            self.square_seite = self.square_umfang / 4
-            self.square_flaeche = self.square_seite * self.square_seite
+            square_seite = self.square_umfang / 4
+            square_flaeche = square_seite * square_seite
             print(f"\nGegeben Umfang: {self.square_umfang}\n"
-                  f"Berechnet Seitenlänge: {self.square_seite}\n"
-                  f"Berechnet Fläche: {self.square_flaeche}")
+                  f"Berechnet Seitenlänge: {square_seite}\n"
+                  f"Berechnet Fläche: {square_flaeche}")
 
         # Fläche known
         elif self.square_whats_given == 3:
-            self.square_seite = math.sqrt(self.square_flaeche)
-            self.square_umfang = self.square_seite * 4
+            square_seite = math.sqrt(self.square_flaeche)
+            square_umfang = square_seite * 4
             print(f"f\nGegeben Fläche: {self.square_flaeche}\n"
-                  f"Berechnet Seitenlänge: {self.square_seite}\n"
-                  f"Berechnet Umfang: {self.square_umfang}")
+                  f"Berechnet Seitenlänge: {square_seite}\n"
+                  f"Berechnet Umfang: {square_umfang}")
 
     def rectangle_input(self):
         """User chooses known value, User enters known value"""
@@ -106,12 +129,12 @@ class GeoCalc:
                                     "Enter two digits with no spaces in between in this format 'num1num2': ")
                 print("")
             else:
-                PICKS_RECTANGLE.append(int(whats_given[0]))
-                PICKS_RECTANGLE.append(int(whats_given[1]))
-                PICKS_RECTANGLE.sort()
+                RECTANGLE_PICKS.append(int(whats_given[0]))
+                RECTANGLE_PICKS.append(int(whats_given[1]))
+                RECTANGLE_PICKS.sort()
                 break
 
-        for i in PICKS_RECTANGLE:
+        for i in RECTANGLE_PICKS:
             if i == 1:
                 self.rectangle_seite_a = float(input("Enter Seitenlänge a: "))
             elif i == 2:
@@ -126,59 +149,59 @@ class GeoCalc:
         """Missing values of Rectangle are calculated"""
 
         # Seitenlängen a und b known
-        if 1 in PICKS_RECTANGLE and 2 in PICKS_RECTANGLE:
-            self.rectangle_umfang = 2 * (self.rectangle_seite_a + self.rectangle_seite_b)
-            self.rectangle_flaeche = self.rectangle_seite_a * self.rectangle_seite_b
+        if 1 in RECTANGLE_PICKS and 2 in RECTANGLE_PICKS:
+            rectangle_umfang = 2 * (self.rectangle_seite_a + self.rectangle_seite_b)
+            rectangle_flaeche = self.rectangle_seite_a * self.rectangle_seite_b
             print(f"\nGegeben Seitenlänge a: {self.rectangle_seite_a}\n"
                   f"Gegeben Seitenlänge b: {self.rectangle_seite_b}\n"
-                  f"Berechnet Umfang: {self.rectangle_umfang}\n"
-                  f"Berechnet Fläche: {self.rectangle_flaeche}")
+                  f"Berechnet Umfang: {rectangle_umfang}\n"
+                  f"Berechnet Fläche: {rectangle_flaeche}")
 
         # Seitenlänge a und Umfang known
-        elif 1 in PICKS_RECTANGLE and 3 in PICKS_RECTANGLE:
-            self.rectangle_seite_b = (self.rectangle_umfang - 2 * self.rectangle_seite_a) / 2
-            self.rectangle_flaeche = self.rectangle_seite_a * self.rectangle_seite_b
+        elif 1 in RECTANGLE_PICKS and 3 in RECTANGLE_PICKS:
+            rectangle_seite_b = (self.rectangle_umfang - 2 * self.rectangle_seite_a) / 2
+            rectangle_flaeche = self.rectangle_seite_a * rectangle_seite_b
             print(f"\nGegeben Seitenlänge a: {self.rectangle_seite_a}\n"
                   f"Gegeben Umfang: {self.rectangle_umfang}\n"
-                  f"Berechnet Seitenlänge b: {self.rectangle_seite_b}\n"
-                  f"Berechnet Fläche: {self.rectangle_flaeche}")
+                  f"Berechnet Seitenlänge b: {rectangle_seite_b}\n"
+                  f"Berechnet Fläche: {rectangle_flaeche}")
 
         # Seitenlänge b und Umfang known
-        elif 2 in PICKS_RECTANGLE and 3 in PICKS_RECTANGLE:
-            self.rectangle_seite_a = (self.rectangle_umfang - 2 * self.rectangle_seite_b) / 2
-            self.rectangle_flaeche = self.rectangle_seite_a * self.rectangle_seite_b
+        elif 2 in RECTANGLE_PICKS and 3 in RECTANGLE_PICKS:
+            rectangle_seite_a = (self.rectangle_umfang - 2 * self.rectangle_seite_b) / 2
+            rectangle_flaeche = rectangle_seite_a * self.rectangle_seite_b
             print(f"\nGegeben Seitenlänge b: {self.rectangle_seite_b}\n"
                   f"Gegeben Umfang: {self.rectangle_umfang}\n"
-                  f"Berechnet Seitenlänge a: {self.rectangle_seite_a}\n"
-                  f"Berechnet Fläche: {self.rectangle_flaeche}")
+                  f"Berechnet Seitenlänge a: {rectangle_seite_a}\n"
+                  f"Berechnet Fläche: {rectangle_flaeche}")
 
         # Seitenlänge a und Fläche known
-        elif 1 in PICKS_RECTANGLE and 4 in PICKS_RECTANGLE:
-            self.rectangle_seite_b = self.rectangle_flaeche / self.rectangle_seite_a
-            self.rectangle_umfang = 2 * (self.rectangle_seite_a + self.rectangle_seite_b)
+        elif 1 in RECTANGLE_PICKS and 4 in RECTANGLE_PICKS:
+            rectangle_seite_b = self.rectangle_flaeche / self.rectangle_seite_a
+            rectangle_umfang = 2 * (self.rectangle_seite_a + rectangle_seite_b)
             print(f"\nGegeben Seitenlänge a: {self.rectangle_seite_a}\n"
                   f"Gegeben Fläche: {self.rectangle_flaeche}\n"
-                  f"Berechnet Seitenlänge b: {self.rectangle_seite_b}\n"
-                  f"Berechnet Umfang: {self.rectangle_umfang}")
+                  f"Berechnet Seitenlänge b: {rectangle_seite_b}\n"
+                  f"Berechnet Umfang: {rectangle_umfang}")
 
         # Seitenlänge b und Fläche known
-        elif 2 in PICKS_RECTANGLE and 4 in PICKS_RECTANGLE:
-            self.rectangle_seite_a = self.rectangle_flaeche / self.rectangle_seite_b
-            self.rectangle_umfang = 2 * (self.rectangle_seite_a + self.rectangle_seite_b)
+        elif 2 in RECTANGLE_PICKS and 4 in RECTANGLE_PICKS:
+            rectangle_seite_a = self.rectangle_flaeche / self.rectangle_seite_b
+            rectangle_umfang = 2 * (rectangle_seite_a + self.rectangle_seite_b)
             print(f"\nGegeben Seitenlänge b: {self.rectangle_seite_b}\n"
                   f"Gegeben Fläche: {self.rectangle_flaeche}\n"
-                  f"Berechnet Seitenlänge a: {self.rectangle_seite_a}\n"
-                  f"Berechnet Umfang: {self.rectangle_umfang}")
+                  f"Berechnet Seitenlänge a: {rectangle_seite_a}\n"
+                  f"Berechnet Umfang: {rectangle_umfang}")
 
         # Umfang und Fläche known
-        elif 3 in PICKS_RECTANGLE and 4 in PICKS_RECTANGLE:
-            self.rectangle_seite_a = ((self.rectangle_umfang / 2)
-                                      + math.sqrt((self.rectangle_umfang / 2) ** 2 - 4 * self.rectangle_flaeche)) / 2
-            self.rectangle_seite_b = self.rectangle_flaeche / self.rectangle_seite_a
+        elif 3 in RECTANGLE_PICKS and 4 in RECTANGLE_PICKS:
+            rectangle_seite_a = ((self.rectangle_umfang / 2)
+                                 + math.sqrt((self.rectangle_umfang / 2) ** 2 - 4 * self.rectangle_flaeche)) / 2
+            rectangle_seite_b = self.rectangle_flaeche / rectangle_seite_a
             print(f"\nGegeben Umfang: {self.rectangle_umfang}\n"
                   f"Gegeben Fläche: {self.rectangle_flaeche}\n"
-                  f"Berechnet Seitenlänge a: {self.rectangle_seite_a}\n"
-                  f"Berechnet Seitenlänge b: {self.rectangle_seite_b}")
+                  f"Berechnet Seitenlänge a: {rectangle_seite_a}\n"
+                  f"Berechnet Seitenlänge b: {rectangle_seite_b}")
 
     def triangle_input(self):
         """User chooses known value, User enters known value"""
@@ -193,7 +216,9 @@ class GeoCalc:
 
         if whats_given == 1:
             self.triangle_seite_c = float(input("Enter Basis: "))
+            TRIANGLE_GEGEBEN["Basis / Seite C:"] = self.triangle_seite_c
             self.triangle_hoehe_c = float(input("Enter Höhe: "))
+            TRIANGLE_GEGEBEN["Höhe C:"] = self.triangle_hoehe_c
         elif whats_given == 2:
             self.triangle_seite_a = float(input("Enter Seite A: "))
             self.triangle_seite_b = float(input("Enter Seite B: "))
@@ -206,6 +231,40 @@ class GeoCalc:
 
     def triangle_calc(self):
         """Missing values of Triangle are calculated"""
+
+        # Basis & Höhe known
+        if self.triangle_whats_given == 1:
+
+            # Länge Seiten
+            TRIANGLE_BERECHNET["Seite A:"] = math.sqrt(self.triangle_hoehe_c ** 2
+                                                       + (0.5 * self.triangle_seite_c) ** 2)
+            TRIANGLE_BERECHNET["Seite B:"] = math.sqrt(self.triangle_hoehe_c ** 2
+                                                       + ((self.triangle_seite_c - TRIANGLE_BERECHNET["Seite A:"])
+                                                          / 2) ** 2)
+            TRIANGLE_BERECHNET["Seite C:"] = self.triangle_seite_c
+
+            # Winkel alpha, beta, gamma
+            TRIANGLE_BERECHNET["\u03B1:"] = math.degrees(math.asin
+                                                         (self.triangle_hoehe_c / TRIANGLE_BERECHNET["Seite A:"]))
+            TRIANGLE_BERECHNET["\u03B2:"] = math.degrees(math.asin
+                                                         (self.triangle_hoehe_c / TRIANGLE_BERECHNET["Seite B:"]))
+            TRIANGLE_BERECHNET["\u03B3:"] = 180 - TRIANGLE_BERECHNET["\u03B1:"] - TRIANGLE_BERECHNET["\u03B2:"]
+
+            # Umfang
+            TRIANGLE_BERECHNET["Umfang:"] = TRIANGLE_BERECHNET["Seite A:"] \
+                                            + TRIANGLE_BERECHNET["Seite B:"] \
+                                            + TRIANGLE_BERECHNET["Seite C:"]
+
+            # Fläche
+            TRIANGLE_BERECHNET["Fläche:"] = 0.5 * self.triangle_seite_c * self.triangle_hoehe_c
+
+            # Höhen
+            TRIANGLE_BERECHNET["Höhe A:"] = 2 * TRIANGLE_BERECHNET["Fläche:"] / self.triangle_seite_c
+            TRIANGLE_BERECHNET["Höhe B:"] = 2 * TRIANGLE_BERECHNET["Fläche:"] / TRIANGLE_BERECHNET["Seite B:"]
+            TRIANGLE_BERECHNET["Höhe C:"] = self.triangle_hoehe_c
+
+        # Ausgabe
+        triangle_print()
 
 
 calc = GeoCalc()
