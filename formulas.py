@@ -93,27 +93,80 @@ def allg_BH(basis, hoehe):
     hoehe_b = 2 * flaeche / seite_b
     hoehe_c = basis
 
-    gegeben = {
-        "Basis / Seite C": basis,
-        "Höhe C": hoehe_c
-    }
-    berechnet = {
-        "Seite A": seite_a,
-        "Seite B": seite_b,
-        "Höhe A": hoehe_a,
-        "Höhe B": hoehe_b,
-        "\u03B1": winkel_a,  # alpha
-        "\u03B2": winkel_b,  # beta
-        "\u03B3": winkel_c,  # gamma
-        "Umfang": umfang,
-        "Fläche": flaeche
-    }
+    # Made a specific function for a more beautiful print
+    # gegeben = {
+    #     "Basis / Seite C": basis,
+    #     "Höhe C": hoehe_c
+    # }
+    # berechnet = {
+    #     "Seite A": seite_a,
+    #     "Seite B": seite_b,
+    #     "Höhe A": hoehe_a,
+    #     "Höhe B": hoehe_b,
+    #     "\u03B1": winkel_a,  # alpha
+    #     "\u03B2": winkel_b,  # beta
+    #     "\u03B3": winkel_c,  # gamma
+    #     "Umfang": umfang,
+    #     "Fläche": flaeche
+    # }
+    #
+    # print("Gegeben:")
+    # for k, v in gegeben.items():
+    #     print(k, round(v, 2))
+    # print("")
+    # print("Berechnet:")
+    # for k, v in berechnet.items():
+    #     print(k, round(v, 2))
+    # print("")
 
-    print("Gegeben:")
-    for k, v in gegeben.items():
-        print(k, round(v, 2))
-    print("")
-    print("Berechnet:")
-    for k, v in berechnet.items():
-        print(k, round(v, 2))
-    print("")
+
+def allg_SSS(seite_a, seite_b, seite_c):
+    """allgemeines Dreieck, Seite & Seite & Seite known
+    - same thing as if umfang and 2 sides are known,
+    but I'll leave it up to the user to solve that 'entry problem' :D"""
+
+    # Umfang
+    umfang = seite_a + seite_b + seite_c
+
+    # Halbumfang (für Flächenberechnung)
+    hu = (seite_a + seite_b + seite_c) / 2
+
+    # Fläche
+    flaeche = math.sqrt(hu * (hu - seite_a) * (hu - seite_b) * (hu - seite_c))
+
+    # Höhen
+    hoehe_a = 2 * flaeche / seite_a
+    hoehe_b = 2 * flaeche / seite_b
+    hoehe_c = 2 * flaeche / seite_c
+
+    # Winkel
+    winkel_a = math.degrees(math.acos((seite_b ** 2 + seite_c ** 2 - seite_a ** 2) / (2 * seite_b * seite_c)))
+    winkel_b = math.degrees(math.acos((seite_c ** 2 + seite_a ** 2 - seite_b ** 2) / (2 * seite_c * seite_a)))
+    winkel_c = 180 - winkel_a - winkel_b
+
+
+def allg_SSEW(seite_x, seite_y, winkel_x):
+    """allgemeines Dreieck, Seite & Seite & Eingeschlossener Winkel"""
+
+    # Bogenmaß des gegebenen Winkels
+    winkel_x = math.radians(winkel_x)
+
+    # Länge Seiten
+    seite_z = math.sqrt(seite_x ** 2 + seite_y ** 2 - 2 * seite_x * seite_y * math.cos(winkel_x))
+
+    # Winkel
+    winkel_y = math.degrees(math.asin(b * math.sin(winkel_x) / seite_z))
+    winkel_z = 180 - winkel_x - winkel_y
+
+    # Fläche
+    hu = (seite_x + seite_y + seite_z) / 2
+    flaeche = math.sqrt(hu * (hu - seite_x) * (hu - seite_y) * (hu - seite_z))
+
+    # Höhen
+    hoehe_x = b * math.sin(winkel_x)
+    hoehe_y = a * math.sin(winkel_y)
+    hoehe_z = 0.5 * a * b * math.sin(winkel_x) / flaeche
+
+    # Umfang
+    umfang = seite_x + seite_y + seite_z
+
