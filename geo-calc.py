@@ -306,24 +306,26 @@ class GeoCalc:
         elif self.triangle_whats_given == 3 or self.triangle_whats_given == 4:
 
             # Bogenmaß des gegebenen Winkels
-            self.triangle_winkel_x = math.radians(self.triangle_winkel_x)
+            winkel_rad = math.radians(self.triangle_winkel_x)
 
             # Länge Seiten
             TRIANGLE_BERECHNET["Seite 3:"] = math.sqrt(self.triangle_seite_x ** 2 +
                                                        self.triangle_seite_y ** 2 -
                                                        2 * self.triangle_seite_x *
                                                        self.triangle_seite_y *
-                                                       math.cos(self.triangle_winkel_x))
+                                                       math.cos(winkel_rad))
 
             # Winkel
             TRIANGLE_BERECHNET["Winkel Y:"] = math.degrees(math.asin(
                 self.triangle_seite_y *
-                math.sin(self.triangle_winkel_x) /
+                math.sin(winkel_rad) /
                 TRIANGLE_BERECHNET["Seite 3:"]))
             TRIANGLE_BERECHNET["Winkel Z:"] = 180 - self.triangle_winkel_x - TRIANGLE_BERECHNET["Winkel Y:"]
 
             # Umfang
-            TRIANGLE_BERECHNET["Umfang:"] = self.triangle_seite_x + self.triangle_seite_y + TRIANGLE_BERECHNET["Seite 3:"]
+            TRIANGLE_BERECHNET["Umfang:"] = self.triangle_seite_x + \
+                                            self.triangle_seite_y + \
+                                            TRIANGLE_BERECHNET["Seite 3:"]
 
             # Fläche (und Halbumfang für Fläche)
             hu = TRIANGLE_BERECHNET["Umfang:"] / 2
@@ -332,10 +334,10 @@ class GeoCalc:
                                 (hu - TRIANGLE_BERECHNET["Seite 3:"]))
 
             #Höhen
-            TRIANGLE_BERECHNET["Höhe 1:"] = self.triangle_seite_y * math.sin(self.triangle_winkel_x)
-            TRIANGLE_BERECHNET["Höhe 2:"] = self.triangle_seite_x * math.sin(TRIANGLE_BERECHNET["Winkel Y:"])
-            TRIANGLE_BERECHNET["Höhe 3:"] = 0.5 * self.triangle_seite_x * self.triangle_seite_y * \
-                                            math.sin(self.triangle_winkel_x) / TRIANGLE_BERECHNET["Fläche:"]
+            TRIANGLE_BERECHNET["Höhe 1:"] = self.triangle_seite_y * math.sin(winkel_rad)
+            TRIANGLE_BERECHNET["Höhe 2:"] = self.triangle_seite_x * math.sin(
+                math.radians(TRIANGLE_BERECHNET["Winkel Y:"]))
+            TRIANGLE_BERECHNET["Höhe 3:"] = 2 * TRIANGLE_BERECHNET["Fläche:"] / self.triangle_seite_y
 
         # Ausgabe
         triangle_print()
