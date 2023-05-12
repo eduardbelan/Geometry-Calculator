@@ -149,13 +149,13 @@ def allg_SSEW(seite_x, seite_y, winkel_x):
     """allgemeines Dreieck, Seite & Seite & Eingeschlossener Winkel"""
 
     # Bogenmaß des gegebenen Winkels
-    winkel_x = math.radians(winkel_x)
+    winkel_rad = math.radians(winkel_x)
 
     # Länge Seiten
-    seite_z = math.sqrt(seite_x ** 2 + seite_y ** 2 - 2 * seite_x * seite_y * math.cos(winkel_x))
+    seite_z = math.sqrt(seite_x ** 2 + seite_y ** 2 - 2 * seite_x * seite_y * math.cos(winkel_rad))
 
     # Winkel
-    winkel_y = math.degrees(math.asin(b * math.sin(winkel_x) / seite_z))
+    winkel_y = math.degrees(math.asin(b * math.sin(winkel_rad) / seite_z))
     winkel_z = 180 - winkel_x - winkel_y
 
     # Fläche
@@ -163,10 +163,36 @@ def allg_SSEW(seite_x, seite_y, winkel_x):
     flaeche = math.sqrt(hu * (hu - seite_x) * (hu - seite_y) * (hu - seite_z))
 
     # Höhen
-    hoehe_x = b * math.sin(winkel_x)
+    hoehe_x = b * math.sin(winkel_rad)
     hoehe_y = a * math.sin(winkel_y)
-    hoehe_z = 0.5 * a * b * math.sin(winkel_x) / flaeche
+    hoehe_z = 2 * flaeche / seite_y
 
     # Umfang
     umfang = seite_x + seite_y + seite_z
+
+
+def allg_SSGW(seite_x, seite_y, winkel_x):
+    """allgemeines Dreieck, Seite & Seite & Gegenüberliegender Winkel"""
+
+    # Bogenmaß des gegebenen Winkels
+    winkel_rad = math.radians(winkel_x)
+
+    # Länge Seiten
+    seite_z = math.sqrt(seite_x ** 2 + seite_y ** 2 - 2 * seite_x * seite_y * math.cos(winkel_rad))
+
+    # Winkel
+    winkel_y = math.degrees(math.asin(seite_y * math.sin(winkel_rad) / seite_x))
+    winkel_z = 180 - winkel_x - winkel_y
+
+    # Umfang
+    umfang = seite_x + seite_y + seite_z
+
+    # Fläche
+    hu = (seite_x + seite_y + seite_z) / 2
+    flaeche = math.sqrt(hu * (hu - seite_x) * (hu - seite_y) * (hu - seite_z))
+
+    # Höhen
+    hoehe_a = seite_y * math.sin(winkel_rad)
+    hoehe_b = seite_x * math.sin(math.radians(winkel_y))
+    hoehe_c = 2 * flaeche / seite_x
 

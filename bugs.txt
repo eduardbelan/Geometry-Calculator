@@ -17,3 +17,17 @@ Program Requirements
 - At last the Program should ask the User if they want to do another calculation.
     - If yes, ask again for a shape.
     - If no, exit the Program.
+
+
+Triangle 3 and 4 - input function - same input (fusion possible?)
+
+* Done
+ATTENTION: Calculation Errors in 4th Triangle
+    - found the mistakes, corrected in formulas (apply to main program)
+
+Program soll die Längen automatisch sortieren bei Eingabe für das 4te Dreieck.
+    - arcsin error wird dadurch vermieden
+
+Module auslagern
+
+Square & Rectangle in global dict print function einbeziehen
