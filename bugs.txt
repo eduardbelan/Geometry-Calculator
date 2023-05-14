@@ -24,7 +24,8 @@ Triangle 3 and 4 - input function - same input (fusion possible?)
 * Done
 ATTENTION: Calculation Errors in 4th Triangle
     - found the mistakes, corrected in formulas (apply to main program)
-
+    
+* Done
 Program soll die Längen automatisch sortieren bei Eingabe für das 4te Dreieck.
     - arcsin error wird dadurch vermieden
 

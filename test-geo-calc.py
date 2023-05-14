@@ -2,7 +2,6 @@
 
 import math
 
-
 # allg_SSGW()
 # winkel_rad = math.radians(70)
 # numerator = 6 * math.sin(winkel_rad)
@@ -36,17 +35,17 @@ import math
 # print(i)
 
 
-seite_1 = float(input("Enter längere Seite: "))
-seite_2 = float(input("Enter kürzere Seite: "))
-
-print(seite_1)
-print(seite_2)
-
-if seite_1 < seite_2:
-    # seite_store = seite_2
-    # seite_2 = seite_1
-    # seite_1 = seite_store
-    seite_1, seite_2 = seite_2, seite_1
-
-print(seite_1)
-print(seite_2)
+# seite_1 = float(input("Enter längere Seite: "))
+# seite_2 = float(input("Enter kürzere Seite: "))
+#
+# print(seite_1)
+# print(seite_2)
+#
+# if seite_1 < seite_2:
+#     # seite_store = seite_2
+#     # seite_2 = seite_1
+#     # seite_1 = seite_store
+#     seite_1, seite_2 = seite_2, seite_1
+#
+# print(seite_1)
+# print(seite_2)
