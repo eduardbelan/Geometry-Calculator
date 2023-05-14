@@ -196,3 +196,147 @@ def allg_SSGW(seite_x, seite_y, winkel_x):
     hoehe_b = seite_x * math.sin(math.radians(winkel_y))
     hoehe_c = 2 * flaeche / seite_x
 
+
+def allg_SWW(seite1, winkel1, winkel2):
+    """allgemeines Dreieck, Seite & Winkel & Winkel"""
+
+    # Winkel
+    winkel3 = 180 - winkel1 - winkel2
+
+    # Bogenmaß
+    winkel1_rad = math.radians(winkel1)
+    winkel2_rad = math.radians(winkel2)
+    winkel3_rad = math.radians(winkel3)
+
+    # Seiten
+    seite2 = seite1 * math.sin(winkel2_rad) / math.sin(winkel1_rad)
+    seite3 = seite1 * math.sin(winkel3_rad) / math.sin(winkel1_rad)
+
+    # Umfang
+    umfang = seite1 + seite2 + seite3
+
+    # Fläche
+    hu = umfang / 2
+    flaeche = math.sqrt(hu * (hu - seite1) * (hu - seite2) * (hu - seite3))
+
+    # Höhen
+    hoehe1 = 2 * flaeche / seite1
+    hoehe2 = 2 * flaeche / seite2
+    hoehe3 = 2 * flaeche / seite3
+
+
+def rechtw_KKRW(kathete1, kathete2):
+    """rechtwinkliges Dreieck, Kathete & Kathete & Rechter Winkel"""
+
+    # Länge Seiten
+    hypotenuse = math.sqrt(kathete1 ** 2 + kathete2 ** 2)
+
+    # Umfang
+    umfang = kathete1 + kathete2 + hypotenuse
+
+    # Fläche
+    flaeche = (kathete1 * kathete2) / 2
+
+    # Winkel
+    gamma = 90
+    alpha = math.degrees(math.asin(kathete1 / hypotenuse))
+    beta = 180 - alpha - gamma
+
+    # Höhe
+    hoehe = (kathete1 / kathete2) / hypotenuse
+
+
+def gleichschenk_BW(basis, gamma):
+    """gleichschenkliges Dreieck, Basis & Winkel Vertex known"""
+
+    # Schenkel
+    schenkel = basis / (2 * math.sin(math.radians(gamma / 2)))
+
+    # Umfang
+    umfang = (2 * schenkel) + basis
+
+    # Fläche
+    hu = umfang / 2
+    flaeche = math.sqrt(hu * (hu - basis) * (hu - schenkel) * (hu - schenkel))
+
+    # Höhe
+    hoehe_basis = schenkel * math.cos(math.radians(gamma / 2))
+    hoehe_schenkel = (2 * flaeche) / schenkel
+
+    # Winkel
+    alpha = (180 - gamma) / 2
+    beta = alpha
+
+
+
+def gleichschenk_BH(basis, hoehe_c):
+    """gleichschenkliges Dreieck, Basis & Höhe der Basis known"""
+
+    # Schenkel
+    schenkel = math.sqrt((4 * (basis ** 2)) + (hoehe_c ** 2)) / 2
+
+    # Winkel
+    winkel = math.degrees(math.acos((basis / 2) / schenkel))
+
+    # Umfang
+    umfang = (2 * schenkel) + basis
+
+    # Fläche
+    flaeche = (basis * hoehe_c) / 2
+
+    # Höhe
+    hoehe_a = (2 * flaeche) / schenkel
+    hoehe_b = (2 * flaeche) / schenkel
+
+
+def gleichseit_S(seite):
+    """gleichseitiges Dreieck, Seite known"""
+
+    # Winkel
+    winkel = 60
+
+    # Höhe
+    hoehe = (math.sqrt(3) / 2) * seite
+
+    # Umfang
+    umfang = 3 * seite
+
+    # Fläche
+    flaeche = (math.sqrt(3) / 4) * seite ** 2
+
+
+def gleichseit_H(hoehe):
+    """gleichseitiges Dreieck, Höhe known"""
+
+    # Seite
+    seite = 2 * hoehe / math.sqrt(3)
+
+    # Umfang
+    umfang = 3 * seite
+
+    # Fläche
+    flaeche = (math.sqrt(3) / 4) * seite ** 2
+
+def gleichseit_U(umfang):
+    """gleichseitiges Dreieck, Umfang known"""
+
+    # Seiten
+    seite = umfang / 3
+
+    # Höhe
+    hoehe = (math.sqrt(3) / 2) * seite
+
+    # Fläche
+    flaeche = (math.sqrt(3) / 4) * seite ** 2
+
+def gleichset_A(flaeche):
+    """gleichseitiges Dreieck, Fläche known"""
+
+    # Seite
+    seite = math.sqrt((4 * flaeche) / math.sqrt(3))
+
+    # Höhe
+    hoehe = (math.sqrt(3) / 2) * seite
+
+    # Umfang
+    umfang = 3 * seite

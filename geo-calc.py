@@ -10,8 +10,10 @@ def triangle_print():
 
     print_order = ["Seite 1:", "Seite 2:", "Seite 3:",
                    "Seite A:", "Seite B:", "Seite C:",
+                   "Kathete 1:", "Kathete 2:",
                    "Höhe 1:", "Höhe 2:", "Höhe 3:",
                    "Höhe A:", "Höhe B:", "Höhe C:",
+                   "Winkel 1:", "Winkel 2:", "Winkel 3:",
                    "Winkel X:", "Winkel Y:", "Winkel Z:",
                    "\u03B1:", "\u03B2:", "\u03B3:",
                    "Umfang:", "Fläche:"]
@@ -215,6 +217,17 @@ class GeoCalc:
                                 "\t2. Alle Seiten\n"
                                 "\t3. Zwei Seiten und der eingeschlossene Winkel\n"
                                 "\t4. Zwei Seiten und der gegenüberliegende Winkel der längeren Seite\n"
+                                "\t5. Eine Seite und zwei Winkel\n"
+                                "Rechtwinkliges Dreieck:\n"
+                                "\t6. Zwei Katheten und der rechte Winkel\n"
+                                "Gleichschenkliges Dreieck:\n"
+                                "\t7. Basis & Gamma\n"
+                                "\t8. Basis & Höhe\n"
+                                "Gleichseitiges Dreieck:\n"
+                                "\t9. Seite\n"
+                                "\t10. Höhe\n"
+                                "\t11. Umfang\n"
+                                "\t12. Fläche\n"
                                 "Type a Number to pick the known value: "))
         print("")
         self.triangle_whats_given = whats_given
@@ -250,6 +263,45 @@ class GeoCalc:
             TRIANGLE_GEGEBEN["Seite 2:"] = self.triangle_seite_y
             self.triangle_winkel_x = float(input("Enter Winkel: "))
             TRIANGLE_GEGEBEN["Winkel X:"] = self.triangle_winkel_x
+
+        elif whats_given == 5:
+            self.triangle_seite1 = float(input("Enter Seite: "))
+            TRIANGLE_GEGEBEN["Seite 1:"] = self.triangle_seite1
+            self.triangle_winkel1 = float(input("Enter Winkel 1: "))
+            TRIANGLE_GEGEBEN["Winkel 1:"] = self.triangle_winkel1
+            self.triangle_winkel2 = float(input("Enter Winkel 2: "))
+            TRIANGLE_GEGEBEN["Winkel 2:"] = self.triangle_winkel2
+
+        elif whats_given == 6:
+            self.triangle_kathete1 = float(input("Enter Kathete 1: "))
+            TRIANGLE_GEGEBEN["Kathete 1:"] = self.triangle_kathete1
+            self.triangle_kathete2 = float(input("Enter Kathete 2: "))
+            TRIANGLE_GEGEBEN["Kathete 2:"] = self.triangle_kathete2
+
+        elif whats_given == 7:
+            self.triangle_seite_c = float(input("Enter Basis: "))
+            TRIANGLE_GEGEBEN["Seite C:"] = self.triangle_seite_c
+            self.triangle_winkel_gamma = float(input("Enter Gamma: "))
+            TRIANGLE_GEGEBEN["\u03B3:"] = self.triangle_winkel_gamma
+
+        elif whats_given == 8:
+            self.triangle_seite_c = float(input("Enter Basis: "))
+            TRIANGLE_GEGEBEN["Seite C:"] = self.triangle_seite_c
+            self.triangle_hoehe_c = float(input("Enter Höhe: "))
+            TRIANGLE_GEGEBEN["Höhe C:"] = self.triangle_hoehe_c
+
+        elif whats_given == 9:
+            self.triangle_seite1 = float(input("Enter Seite: "))
+            TRIANGLE_GEGEBEN["Seite A:"] = self.triangle_seite1
+
+        elif whats_given == 10:
+            pass
+
+        elif whats_given == 11:
+            pass
+
+        elif whats_given == 12:
+            pass
         self.triangle_calc()
 
     def triangle_calc(self):
@@ -383,6 +435,132 @@ class GeoCalc:
                                             math.sin(math.radians(TRIANGLE_BERECHNET["Winkel Z:"]))
             TRIANGLE_BERECHNET["Höhe C:"] = self.triangle_seite_x * \
                                             math.sin(math.radians(TRIANGLE_BERECHNET["Winkel Y:"]))
+
+        # Seite & Winkel & Winkel known
+        elif self.triangle_whats_given == 5:
+
+            # Winkel
+            TRIANGLE_BERECHNET["Winkel 3:"] = 180 - self.triangle_winkel1 - self.triangle_winkel2
+
+            # Bogenmaß
+            winkel1_rad = math.radians(self.triangle_winkel1)
+            winkel2_rad = math.radians(self.triangle_winkel2)
+            winkel3_rad = math.radians(TRIANGLE_BERECHNET["Winkel 3:"])
+
+            # Seiten
+            TRIANGLE_BERECHNET["Seite 2:"] = self.triangle_seite1 * math.sin(winkel2_rad) / math.sin(winkel1_rad)
+            TRIANGLE_BERECHNET["Seite 3:"] = self.triangle_seite1 * math.sin(winkel3_rad) / math.sin(winkel1_rad)
+
+            # Umfang
+            TRIANGLE_BERECHNET["Umfang:"] = self.triangle_seite1 + TRIANGLE_BERECHNET["Seite 2:"] + \
+                                            TRIANGLE_BERECHNET["Seite 3:"]
+
+            # Fläche
+            hu = TRIANGLE_BERECHNET["Umfang:"] / 2
+            TRIANGLE_BERECHNET["Fläche:"] = math.sqrt(hu * (hu - self.triangle_seite1) *
+                                                      (hu - TRIANGLE_BERECHNET["Seite 2:"]) *
+                                                      (hu - TRIANGLE_BERECHNET["Seite 3:"]))
+
+            # Höhen
+            TRIANGLE_BERECHNET["Höhe 1:"] = 2 * TRIANGLE_BERECHNET["Fläche:"] / self.triangle_seite1
+            TRIANGLE_BERECHNET["Höhe 2:"] = 2 * TRIANGLE_BERECHNET["Fläche:"] / TRIANGLE_BERECHNET["Seite 2:"]
+            TRIANGLE_BERECHNET["Höhe 3:"] = 2 * TRIANGLE_BERECHNET["Fläche:"] / TRIANGLE_BERECHNET["Seite 3:"]
+
+        # Kathete & Kathete & Rechter Winkel known
+        elif self.triangle_whats_given == 6:
+
+            # Länge Seiten
+            TRIANGLE_BERECHNET["Seite C:"] = math.sqrt(self.triangle_kathete1 ** 2 + self.triangle_kathete2 ** 2)
+
+            # Umfang
+            TRIANGLE_BERECHNET["Umfang:"] = self.triangle_kathete1 + \
+                                            self.triangle_kathete2 + TRIANGLE_BERECHNET["Seite C:"]
+
+            # Fläche
+            TRIANGLE_BERECHNET["Fläche:"] = (self.triangle_kathete1 * self.triangle_kathete2) / 2
+
+            # Winkel
+            TRIANGLE_GEGEBEN["\u03B3:"] = 90
+            TRIANGLE_BERECHNET["\u03B1:"] = math.degrees(math.asin(
+                self.triangle_kathete1 / TRIANGLE_BERECHNET["Seite C:"]))
+            TRIANGLE_BERECHNET["\u03B2:"] = 180 - TRIANGLE_BERECHNET["\u03B1:"] - TRIANGLE_GEGEBEN["\u03B3:"]
+
+            # Höhe
+            TRIANGLE_BERECHNET["Höhe A:"] = self.triangle_kathete2
+            TRIANGLE_BERECHNET["Höhe B:"] = self.triangle_kathete1
+            TRIANGLE_BERECHNET["Höhe C:"] = self.triangle_kathete1 * math.sin(
+                math.radians(TRIANGLE_BERECHNET["\u03B2:"]))
+
+        # Basis & Winkel Vertex known
+        elif self.triangle_whats_given == 7:
+
+            # Schenkel
+            schenkel = self.triangle_seite_c / (2 * math.sin(math.radians(self.triangle_winkel_gamma / 2)))
+            TRIANGLE_BERECHNET["Seite A:"] = schenkel
+            TRIANGLE_BERECHNET["Seite B:"] = schenkel
+
+            # Umfang
+            TRIANGLE_BERECHNET["Umfang:"] = (2 * schenkel) + self.triangle_seite_c
+
+            # Fläche
+            hu = TRIANGLE_BERECHNET["Umfang:"] / 2
+            TRIANGLE_BERECHNET["Fläche:"] = math.sqrt(hu * (hu - self.triangle_seite_c) *
+                                                      (hu - schenkel) * (hu - schenkel))
+
+            # Höhe
+            TRIANGLE_BERECHNET["Höhe C:"] = schenkel * math.cos(math.radians(self.triangle_winkel_gamma / 2))
+            TRIANGLE_BERECHNET["Höhe A:"] = (2 * TRIANGLE_BERECHNET["Fläche:"]) / schenkel
+            TRIANGLE_BERECHNET["Höhe B:"] = (2 * TRIANGLE_BERECHNET["Fläche:"]) / schenkel
+
+            # Winkel
+            TRIANGLE_BERECHNET["\u03B1:"] = (180 - self.triangle_winkel_gamma) / 2
+            TRIANGLE_BERECHNET["\u03B2:"] = TRIANGLE_BERECHNET["\u03B1:"]
+
+        # Basis & Höhe known
+        elif self.triangle_whats_given == 8:
+
+            # Schenkel
+            schenkel = math.sqrt((4 * (self.triangle_hoehe_c ** 2)) + (self.triangle_seite_c ** 2)) / 2
+            TRIANGLE_BERECHNET["Seite A:"] = schenkel
+            TRIANGLE_BERECHNET["Seite B:"] = schenkel
+
+            # Winkel
+            TRIANGLE_BERECHNET["\u03B1:"] = math.degrees(math.acos((self.triangle_seite_c / 2) / schenkel))
+            TRIANGLE_BERECHNET["\u03B2:"] = TRIANGLE_BERECHNET["\u03B1:"]
+            TRIANGLE_BERECHNET["\u03B3:"] = 180 - TRIANGLE_BERECHNET["\u03B1:"] - TRIANGLE_BERECHNET["\u03B2:"]
+
+            # Umfang
+            TRIANGLE_BERECHNET["Umfang:"] = (2 * schenkel) + self.triangle_seite_c
+
+            # Fläche
+            TRIANGLE_BERECHNET["Fläche:"] = (self.triangle_seite_c * self.triangle_hoehe_c) / 2
+
+            # Höhe
+            TRIANGLE_BERECHNET["Höhe A:"] = (2 * TRIANGLE_BERECHNET["Fläche:"]) / schenkel
+            TRIANGLE_BERECHNET["Höhe B:"] = (2 * TRIANGLE_BERECHNET["Fläche:"]) / schenkel
+
+        # Seite known
+        elif self.triangle_whats_given == 9:
+
+            # Seiten
+            TRIANGLE_BERECHNET["Seite B:"] = self.triangle_seite1
+            TRIANGLE_BERECHNET["Seite C:"] = self.triangle_seite1
+
+            # Winkel
+            TRIANGLE_BERECHNET["\u03B1:"] = 60
+            TRIANGLE_BERECHNET["\u03B2:"] = 60
+            TRIANGLE_BERECHNET["\u03B3:"] = 60
+
+            # Höhe
+            TRIANGLE_BERECHNET["Höhe A:"] = (math.sqrt(3) / 2) * self.triangle_seite1
+            TRIANGLE_BERECHNET["Höhe B:"] = TRIANGLE_BERECHNET["Höhe A:"]
+            TRIANGLE_BERECHNET["Höhe C:"] = TRIANGLE_BERECHNET["Höhe C:"]
+
+            # Umfang
+            TRIANGLE_BERECHNET["Umfang:"] = 3 * self.triangle_seite1
+
+            # Fläche
+            TRIANGLE_BERECHNET["Fläche:"] = (math.sqrt(3) / 4) * self.triangle_seite1 ** 2
 
         # Ausgabe
         triangle_print()
