@@ -1,5 +1,5 @@
 import math
-from formulas import umfang, flaecheninhalt, gegeben_umfang, gegeben_flaecheninhalt
+from q_formulas import umfang, flaecheninhalt, gegeben_umfang, gegeben_flaecheninhalt
 
 
 def berechnung_frage():

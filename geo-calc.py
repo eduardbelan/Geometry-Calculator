@@ -295,13 +295,16 @@ class GeoCalc:
             TRIANGLE_GEGEBEN["Seite A:"] = self.triangle_seite1
 
         elif whats_given == 10:
-            pass
+            self.triangle_hoehe_c = float(input("Enter Höhe: "))
+            TRIANGLE_GEGEBEN["Höhe C:"] = self.triangle_hoehe_c
 
         elif whats_given == 11:
-            pass
+            self.triangle_umfang = float(input("Enter Umfang: "))
+            TRIANGLE_GEGEBEN["Umfang:"] = self.triangle_umfang
 
         elif whats_given == 12:
-            pass
+            self.triangle_flaeche = float(input("Enter Fläche: "))
+            TRIANGLE_GEGEBEN["Fläche:"] = self.triangle_flaeche
         self.triangle_calc()
 
     def triangle_calc(self):
@@ -539,7 +542,7 @@ class GeoCalc:
             TRIANGLE_BERECHNET["Höhe A:"] = (2 * TRIANGLE_BERECHNET["Fläche:"]) / schenkel
             TRIANGLE_BERECHNET["Höhe B:"] = (2 * TRIANGLE_BERECHNET["Fläche:"]) / schenkel
 
-        # Seite known
+        # Seite known - Gleichseitiges Dreieck
         elif self.triangle_whats_given == 9:
 
             # Seiten
@@ -554,13 +557,74 @@ class GeoCalc:
             # Höhe
             TRIANGLE_BERECHNET["Höhe A:"] = (math.sqrt(3) / 2) * self.triangle_seite1
             TRIANGLE_BERECHNET["Höhe B:"] = TRIANGLE_BERECHNET["Höhe A:"]
-            TRIANGLE_BERECHNET["Höhe C:"] = TRIANGLE_BERECHNET["Höhe C:"]
+            TRIANGLE_BERECHNET["Höhe C:"] = TRIANGLE_BERECHNET["Höhe A:"]
 
             # Umfang
             TRIANGLE_BERECHNET["Umfang:"] = 3 * self.triangle_seite1
 
             # Fläche
             TRIANGLE_BERECHNET["Fläche:"] = (math.sqrt(3) / 4) * self.triangle_seite1 ** 2
+
+        # Höhe known - Gleichseitiges Dreieck
+        elif self.triangle_whats_given == 10:
+
+            # Seiten
+            TRIANGLE_BERECHNET["Seite A:"] = 2 * self.triangle_hoehe_c / math.sqrt(3)
+            TRIANGLE_BERECHNET["Seite B:"] = TRIANGLE_BERECHNET["Seite A:"]
+            TRIANGLE_BERECHNET["Seite C:"] = TRIANGLE_BERECHNET["Seite A:"]
+
+            # Winkel
+            TRIANGLE_BERECHNET["\u03B1:"] = 60
+            TRIANGLE_BERECHNET["\u03B2:"] = 60
+            TRIANGLE_BERECHNET["\u03B3:"] = 60
+
+            # Umfang
+            TRIANGLE_BERECHNET["Umfang:"] = TRIANGLE_BERECHNET["Seite A:"] * 3
+
+            # Fläche
+            TRIANGLE_BERECHNET["Fläche:"] = (math.sqrt(3) / 4) * TRIANGLE_BERECHNET["Seite A:"] ** 2
+
+        # Umfang known - Gleichseitiges Dreieck
+        elif self.triangle_whats_given == 11:
+
+            # Seiten
+            TRIANGLE_BERECHNET["Seite A:"] = self.triangle_umfang / 3
+            TRIANGLE_BERECHNET["Seite B:"] = TRIANGLE_BERECHNET["Seite A:"]
+            TRIANGLE_BERECHNET["Seite C:"] = TRIANGLE_BERECHNET["Seite A:"]
+
+            # Winkel
+            TRIANGLE_BERECHNET["\u03B1:"] = 60
+            TRIANGLE_BERECHNET["\u03B2:"] = 60
+            TRIANGLE_BERECHNET["\u03B3:"] = 60
+
+            # Höhe
+            TRIANGLE_BERECHNET["Höhe A:"] = (math.sqrt(3) / 2) * TRIANGLE_BERECHNET["Seite A:"]
+            TRIANGLE_BERECHNET["Höhe B:"] = TRIANGLE_BERECHNET["Höhe A:"]
+            TRIANGLE_BERECHNET["Höhe C:"] = TRIANGLE_BERECHNET["Höhe A:"]
+
+            # Fläche
+            TRIANGLE_BERECHNET["Fläche:"] = (math.sqrt(3) / 4) * TRIANGLE_BERECHNET["Seite A:"] ** 2
+
+        # Fläche known - Gleichseitiges Dreieck
+        elif self.triangle_whats_given == 12:
+
+            # Seiten
+            TRIANGLE_BERECHNET["Seite A:"] = math.sqrt((4 * self.triangle_flaeche) / math.sqrt(3))
+            TRIANGLE_BERECHNET["Seite B:"] = TRIANGLE_BERECHNET["Seite A:"]
+            TRIANGLE_BERECHNET["Seite C:"] = TRIANGLE_BERECHNET["Seite A:"]
+
+            # Winkel
+            TRIANGLE_BERECHNET["\u03B1:"] = 60
+            TRIANGLE_BERECHNET["\u03B2:"] = 60
+            TRIANGLE_BERECHNET["\u03B3:"] = 60
+
+            # Höhe
+            TRIANGLE_BERECHNET["Höhe A:"] = (math.sqrt(3) / 2) * TRIANGLE_BERECHNET["Seite A:"]
+            TRIANGLE_BERECHNET["Höhe B:"] = TRIANGLE_BERECHNET["Höhe A:"]
+            TRIANGLE_BERECHNET["Höhe C:"] = TRIANGLE_BERECHNET["Höhe A:"]
+
+            # Umfang
+            TRIANGLE_BERECHNET["Umfang:"] = TRIANGLE_BERECHNET["Seite A:"] * 3
 
         # Ausgabe
         triangle_print()
